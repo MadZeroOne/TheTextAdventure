@@ -1,0 +1,21 @@
+﻿<Window x:Class="TheTextAdventureW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid Height="auto" Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="textShow" Margin="5" Background="Black" Foreground="White" TextAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0">tttt</TextBlock>
+        <Grid Grid.Row="1" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"  Foreground="White">Input:</TextBlock>
+            <TextBox Name="InputBox" Grid.Column="1"  Background="Black" Foreground="White"  KeyDown="TextBox_KeyDown" ></TextBox>
+
+        </Grid>
+    </Grid>
+</Window>
