@@ -34,17 +34,25 @@ namespace TheTextAdventureW
         Thread threadText;
 
         //SQL Compact
-
+        private enum GameMode
+        {
+            MAINMENU,
+            STORY
+        }
 
         public MainWindow()
         {
             InitializeComponent();
-            textShow.Text = string.Empty;
-            this.Closing += MainWindow_Closing;
-            this.OnThreadCompleted += MainWindow_OnThreadCompleted;
-            MainIntro();
-            InputBox.Focus();
-            TestSelect();
+
+            wpfEditorMain editor = new wpfEditorMain();
+            editor.ShowDialog();
+            this.Close();
+            //textShow.Text = string.Empty;
+            //this.Closing += MainWindow_Closing;
+            //this.OnThreadCompleted += MainWindow_OnThreadCompleted;
+            //MainIntro();
+            //InputBox.Focus();
+            //TestSelect();
         }
 
 
@@ -54,9 +62,11 @@ namespace TheTextAdventureW
             {
                 SqlCeConnection sqlceConn = clsDBConnect.GetDBConnectAsync();
                 DataTable dtRet = new DataTable();
-                clsTypes type = new clsTypes();
 
-                Exception ex = clsDBConnect.SelectData("select * from MENU_T", out dtRet, sqlceConn, null);
+                clsTypes type = new clsTypes();
+                type.ParamterDictionary = new Dictionary<string, object>();
+                type.ParamterDictionary.Add("MENU_ID", 1);
+                Exception ex = clsDBConnect.SelectData("select * from MENU_T where MENU_ID = @MENU_ID", out dtRet, sqlceConn, type.ParamterDictionary);
                 if (ex != null)
                 {
                     throw ex;
@@ -142,11 +152,7 @@ namespace TheTextAdventureW
             systemIsRunning = false;
         }
 
-        private enum GameMode
-        {
-            MAINMENU,
-            STORY
-        }
+
 
         private void MainIntro()
         {
@@ -180,6 +186,8 @@ namespace TheTextAdventureW
                 throw;
             }
         }
+
+
         private void TextLeftToRight(string InputText, int speed)
         {
             TextLeftToRight(InputText, speed, false);
@@ -199,13 +207,6 @@ namespace TheTextAdventureW
                      }));
                 }
 
-                //if (!clearText)
-                //{
-                //}
-                //else
-                //{
-                //    ShowText = InputText;
-                //}
                 textSpeed = speed;
                 if (threadText == null)
                 {
